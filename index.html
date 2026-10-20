@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Reset</title>
+  <meta name="theme-color" content="#14202d">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#today">Reset</a>
+    <button id="signout" class="link" hidden>Sign out</button>
+  </header>
+  <p id="mode" class="mode"></p>
+  <nav class="tabs" aria-label="Sections">
+    <a href="#today">Today</a>
+    <a href="#log">Log</a>
+    <a href="#plan">Plan</a>
+    <a href="#food">Food</a>
+    <a href="#progress">Progress</a>
+  </nav>
+
+  <main id="view" class="wrap" tabindex="-1"></main>
+
+
+  <div id="toast" class="toast" role="status" hidden></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reset rules</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    @page { size: A4; margin: 14mm; }
+    body { font: 400 12pt/1.4 'Barlow', sans-serif; color: #14202d; background: #fff; max-width: 180mm; margin: 0 auto; padding: 16px; }
+    h1 { font: 800 30pt/1 'Barlow Condensed', sans-serif; margin: 0 0 2mm; }
+    .sub { color: #5b6b7d; margin: 0 0 6mm; }
+    ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 5mm 8mm; }
+    li { border-top: 2px solid #14202d; padding-top: 2mm; }
+    .t { font: 700 15pt/1.1 'Barlow Condensed', sans-serif; margin: 0 0 1mm; }
+    p { margin: 0; }
+    .day { margin-top: 8mm; border-top: 2px solid #a85f00; padding-top: 3mm; }
+    .day h2 { font: 700 15pt/1 'Barlow Condensed', sans-serif; margin: 0 0 2mm; }
+    .day table { width: 100%; border-collapse: collapse; }
+    .day td { padding: 1mm 0; vertical-align: top; }
+    .day td:first-child { width: 22mm; font-weight: 600; }
+    .survival { margin-top: 6mm; font-size: 11pt; color: #3b4b5d; }
+    .noprint { margin-top: 10mm; }
+    @media print { .noprint { display: none; } }
+    @media (max-width: 560px) { ol { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>The Reset — rules</h1>
+  <p class="sub">Burj2Burj: Sunday 24 January 2027 · Goal: 91–93 kg</p>
+  <ol id="rules"></ol>
+  <div class="day">
+    <h2>A normal workday</h2>
+    <table id="day"></table>
+  </div>
+  <p class="survival" id="survival"></p>
+  <p class="noprint"><button onclick="print()">Print</button></p>
+  <script type="module">
+    import { RULES, SURVIVAL } from './js/plan.js';
+    const esc = (s) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    document.getElementById('rules').innerHTML = RULES.map((r) => `<li><p class="t">${esc(r.title)}</p><p>${esc(r.text)}</p></li>`).join('');
+    const day = [
+      ['05:00', 'Up. Shoes on. Walk or walk-run on the track.'],
+      ['06:00', 'Black coffee. Get ready. Out by 07:00.'],
+      ['12:00', 'Lunch box.'],
+      ['16:00', 'Yogurt or cottage cheese + fruit.'],
+      ['19:30', 'Heat my dinner box first.'],
+      ['20:00', 'Mon / Wed / Fri: session or 10-minute minimum.'],
+      ['22:00', 'Log the day. Phone charging outside the bedroom.'],
+      ['22:30', 'Lights out.'],
+    ];
+    document.getElementById('day').innerHTML = day.map(([t, w]) => `<tr><td>${t}</td><td>${esc(w)}</td></tr>`).join('');
+    document.getElementById('survival').textContent = 'Survival mode (bad weeks): ' + SURVIVAL.keep.join(' ');
+  </script>
+</body>
+</html>

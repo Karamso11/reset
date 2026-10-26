@@ -18,7 +18,7 @@ const fmt = (s, opts = { weekday: 'short', day: 'numeric', month: 'short' }) => 
 
 function weekOf(date) {
   const w = Math.floor(daysBetween(P.PLAN_START, date) / 7) + 1;
-  return Math.min(Math.max(w, 1), 14);
+  return Math.min(Math.max(w, 1), P.WEEKS);
 }
 const weekStart = (w) => addDays(P.PLAN_START, (w - 1) * 7);
 
@@ -59,7 +59,7 @@ function sessionBlock(s) {
   return `
     <div class="session">
       <p class="session-name">${esc(s.name)} <span class="muted">· ${esc(s.time)}</span></p>
-      <ul class="steps">${s.full.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
+      <ul class="steps">${s.full.map((x) => x.startsWith('• ') ? `<li class="in">${esc(x.slice(2))}</li>` : `<li>${esc(x)}</li>`).join('')}</ul>
       <details class="minimum">
         <summary>Bad night? 10-minute minimum</summary>
         <ul class="steps">${s.minimum.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
@@ -91,7 +91,7 @@ function renderToday() {
       ${bib}
       <div class="hero-text">
         <h1>${DAY_NAMES[p.dow]}</h1>
-        <p class="sub">Week ${p.week} of 14 · ${esc(p.run.focus)}</p>
+        <p class="sub">Week ${p.week} of ${P.WEEKS} · ${esc(p.run.focus)}</p>
         <p class="logstate ${log ? 'done' : ''}">${log ? 'Logged today ✓' : 'Not logged yet'}</p>
       </div>
     </section>
@@ -224,7 +224,7 @@ function renderPlan(wArg) {
         <h1>Week ${w}</h1>
         <div class="stepper">
           <a class="btn" href="#plan/${Math.max(1, w - 1)}" aria-label="Previous week" ${w === 1 ? 'aria-disabled="true"' : ''}>‹</a>
-          <a class="btn" href="#plan/${Math.min(14, w + 1)}" aria-label="Next week" ${w === 14 ? 'aria-disabled="true"' : ''}>›</a>
+          <a class="btn" href="#plan/${Math.min(P.WEEKS, w + 1)}" aria-label="Next week" ${w === P.WEEKS ? 'aria-disabled="true"' : ''}>›</a>
         </div>
       </div>
       <p class="sub">${fmt(start)} – ${fmt(addDays(start, 6))} · ${esc(P.RUN_WEEKS[w].focus)}${w === current ? ' · this week' : ''}</p>
@@ -372,7 +372,7 @@ function buildReport(w) {
   const start = weekStart(w);
   const change = s.weight !== null && prev && prev.weight !== null ? (s.weight - prev.weight) : null;
   const lines = [
-    `RESET — weekly report, week ${w} of 14 (${fmt(start)} – ${fmt(addDays(start, 6))})`,
+    `RESET — weekly report, week ${w} of ${P.WEEKS} (${fmt(start)} – ${fmt(addDays(start, 6))})`,
     `Days logged: ${s.logs.length}/7`,
     `Weight avg: ${f1(s.weight)} kg${change !== null ? ` (${change > 0 ? '+' : ''}${change.toFixed(1)} vs last week)` : ''}`,
     `Waist: ${s.waist ? s.waist + ' cm' : 'not measured'}`,
@@ -385,7 +385,7 @@ function buildReport(w) {
     'Day by day:',
     ...s.logs.map((l) => `${fmt(l.date)}: wt ${l.weight ?? '—'} · AM ${l.am_session ?? '—'}${l.am_km ? ` ${l.am_km} km` : ''} · PM ${l.pm_session ?? '—'} · meals ${l.meals_on_plan ?? '—'}/3 · energy ${l.energy ?? '—'} · sleep ${l.sleep_time ?? '—'} · cigs ${l.cigarettes ?? '—'} · iqos ${l.iqos ?? '—'}${l.notes ? `\n   note: ${l.notes}` : ''}`),
     '',
-    `Next week's plan focus: ${w < 14 ? P.RUN_WEEKS[w + 1].focus : 'after the race'}`,
+    `Next week's plan focus: ${w < P.WEEKS ? P.RUN_WEEKS[w + 1].focus : 'after the race'}`,
   ];
   return lines.join('\n');
 }

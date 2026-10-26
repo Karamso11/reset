@@ -1,7 +1,8 @@
 // All of Karam's plan lives in this file.
 // To change the plan, edit the text here — the website reads everything from it.
 
-export const PLAN_START = '2026-10-19'; // Monday of week 1
+export const PLAN_START = '2026-10-26'; // Monday of week 1
+export const WEEKS = 13;
 export const RACE = { name: 'Burj2Burj Half Marathon', date: '2027-01-24', start: '06:30',
   note: 'Cut-offs reported for the race: about 3 hours overall and the Al Wasl point (around km 10) by 07:40. Confirm both in the official race-instructions email.' };
 
@@ -25,10 +26,9 @@ export const RUN_WEEKS = {
   8:  { focus: 'Easy week — recover', easy: 'Easy walk, 30 min', intervals: '5 min walk, then 5 × (3 min jog + 2 min walk)', sat: '5 km easy walk-run', long: '9 km easy walk-run: 3 min jog / 1 min walk' },
   9:  { focus: 'Longer runs', easy: 'Easy walk, 35 min', intervals: '5 min walk, then 5 × (6 min jog + 1 min walk)', sat: '6 km walk-run: 4 min jog / 1 min walk', long: '14 km walk-run: 4 min jog / 1 min walk' },
   10: { focus: 'Longer runs', easy: 'Easy walk, 35 min', intervals: '5 min walk, then 4 × (8 min jog + 1 min walk)', sat: '7 km walk-run: 4 min jog / 1 min walk', long: '15 km walk-run: 4 min jog / 1 min walk' },
-  11: { focus: 'Race rhythm', easy: 'Easy walk, 35 min', intervals: '5 min walk, then 3 × (10 min jog + 1 min walk)', sat: '7 km walk-run: 5 min jog / 1 min walk', long: '17 km walk-run: 5 min jog / 1 min walk' },
-  12: { focus: 'Dress rehearsal', easy: 'Easy walk, 35 min', intervals: '5 min walk, then 3 × (10 min jog + 1 min walk)', sat: '6 km easy walk-run', long: '18 km at race rhythm (5 jog / 1 walk). Same breakfast, shoes and kit you will race in.' },
-  13: { focus: 'Taper — trust the work', easy: 'Easy walk, 30 min', intervals: '5 min walk, then 3 × (8 min jog + 1 min walk)', sat: '5 km easy', long: '12 km walk-run: 5 min jog / 1 min walk' },
-  14: { focus: 'Race week', easy: 'Easy walk, 20–30 min', intervals: '20 min easy, with 4 × (3 min jog + 1 min walk)', sat: '15 min easy walk, lay out race kit', long: 'RACE DAY — Burj2Burj. Start slower than feels right. 5 jog / 1 walk from the gun.' },
+  11: { focus: 'Race rhythm', easy: 'Easy walk, 35 min', intervals: '5 min walk, then 3 × (10 min jog + 1 min walk)', sat: '7 km walk-run: 5 min jog / 1 min walk', long: '17 km at race rhythm (5 jog / 1 walk). Same breakfast, shoes and kit you will race in.' },
+  12: { focus: 'Taper — trust the work', easy: 'Easy walk, 30 min', intervals: '5 min walk, then 3 × (8 min jog + 1 min walk)', sat: '5 km easy', long: '12 km walk-run: 5 min jog / 1 min walk' },
+  13: { focus: 'Race week', easy: 'Easy walk, 20–30 min', intervals: '20 min easy, with 4 × (3 min jog + 1 min walk)', sat: '15 min easy walk, lay out race kit', long: 'RACE DAY — Burj2Burj. Start slower than feels right. 5 jog / 1 walk from the gun.' },
 };
 
 export const RUN_RULES = [
@@ -146,8 +146,8 @@ export function eveningSession(week, day) {
   else if (week <= 6) plan = week % 2 ? map('P2A', 'P2B', 'P2A') : map('P2B', 'P2A', 'P2B');
   else if (week === 8) plan = map('P3D', 'P3D', 'REST');
   else if (week <= 10) plan = week % 2 ? map('P3A', 'P3B', 'P3A') : map('P3B', 'P3A', 'P3B');
-  else if (week <= 12) plan = map('SP', 'SP', 'SP');
-  else if (week === 13) plan = map('SP', 'P3D', 'REST');
+  else if (week === 11) plan = map('SP', 'SP', 'SP');
+  else if (week === 12) plan = map('SP', 'P3D', 'REST');
   else plan = map('P3D', 'REST', 'REST');
   return plan[day] || 'REST';
 }
@@ -156,7 +156,7 @@ export const PHASES = [
   { weeks: '1–2', name: 'Show up', text: 'Tiny sessions. The only job is the habit. No deadlifts, no barbell, nothing overhead.' },
   { weeks: '3–6', name: 'Rebuild', text: 'Dumbbells and bodyweight, two sessions (A and B) alternating. Add weight only when every set feels easy.' },
   { weeks: '7–10', name: 'Build', text: 'Barbell comes in: squat in the rack, Romanian deadlift, rows. Short finishers on the rower. Week 8 is an easy week.' },
-  { weeks: '11–14', name: 'Street Parking, scaled', text: 'Daily WOD on Mon/Wed/Fri, capped at 30 min, scaled, no jumping. Fewer sessions in the race taper.' },
+  { weeks: '11–13', name: 'Street Parking, scaled', text: 'Daily WOD on Mon/Wed/Fri, capped at 30 min, scaled, no jumping. Fewer sessions in the race taper.' },
 ];
 
 export const TRAINING_RULES = [
